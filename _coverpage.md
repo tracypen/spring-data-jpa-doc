@@ -16,7 +16,7 @@
 - 支持面向对象的高级特性
 - 事务性，并发访问、大数据量
 
-[GitHub](https://docs.spring.io/spring-data/jpa/docs/2.5.11/reference/html)
+[GitHub](https://github.com/tracypen/spring-data-jpa-doc)
 [Get Started](/doc/doc1)
 
 <!-- 背景图片 -->
