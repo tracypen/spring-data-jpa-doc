@@ -18,33 +18,24 @@
   <script>
     window.$docsify = {
       search: 'auto',
+      themeColor: '#0F51B5',
       search: [
         '/',            // => /README.md
       ],
       search: {
         maxAge: 86400000, // 过期时间，单位毫秒，默认一天
         paths: [], // or 'auto'
-        placeholder: '搜个啥吧',
-
+        placeholder: '搜点啥吧',
         noData: 'No Results!',
-
-        // 支持本地化
-        noData: {
-          '/zh-cn/': '找不到结果',
-          '/': '没有结果啊'
-        },
-
-        // 搜索标题的最大层级, 1 - 6
         depth: 4,
-
-        hideOtherSidebarContent: false, // 是否隐藏其他侧边栏内容
+        hideOtherSidebarContent: false,
 
         // 避免搜索索引冲突
         // 同一域下的多个网站之间
         namespace: 'HP-BLOG',
       },
       mergeNavbar: true,
-      name: 'B+ SpringDataJPA分享',
+      name: '<strong>B+ SpringDataJPA分享</strong>',
       repo: 'https://github.com/tracypen/spring-data-jpa-doc',
       loadNavbar: false,
       loadSidebar: true,
@@ -61,6 +52,8 @@
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css">
 
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-java.min.js"></script>
