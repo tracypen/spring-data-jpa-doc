@@ -519,18 +519,18 @@ Pageable  Sort
 #### 3.2.4 JPQL查询
 
 ```java
-    @Query("select P from Postsale p ")
+    @Query("SELECT p FROM Postsale p WHERE p.afsSn= ?1")
     Stream<Postsale> findAllPostsales();
 
-	@Query("select u from User u")
-	Stream<User> streamAllPaged(Pageable pageable);
+	@Query("SELECT p FROM Postsale p")
+	Stream<Postsale> findPostsalesPage(Pageable pageable);
 ```
 
 #### 3.2.5 原生SQL
 
 ```java
-    @Query(value = "SELECT * FROM t_postsale WHERE afs_sn = ?1", nativeQuery = true)
-    Postsale getByAfsSn(String sfsSn);
+    @Query(value = "SELECT id,afs_sn FROM t_postsale WHERE afs_sn = ?1", nativeQuery = true)
+    List<Postsale> getByAfsSn(String sfsSn);
 ```
 
 > **注意：** 分页查询时需要指定count对应的查询sql
