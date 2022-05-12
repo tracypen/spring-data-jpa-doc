@@ -30,7 +30,7 @@
 
 集成`RepositoryBeanDefinitionRegistrarSupport`
 
-```
+```java
 class JpaRepositoriesRegistrar extends RepositoryBeanDefinitionRegistrarSupport {
 
 	/*
@@ -139,7 +139,7 @@ public abstract class RepositoryBeanDefinitionRegistrarSupport implements Import
 
 上一步我们确定了，jps是通过创建factory动态创建repository的，先看一看`JpaRepositoryFactoryBean` 源码
 
-```
+```java
 public void afterPropertiesSet() {
         this.factory = this.createRepositoryFactory();
         this.factory.setQueryLookupStrategyKey(this.queryLookupStrategyKey);

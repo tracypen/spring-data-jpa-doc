@@ -479,7 +479,15 @@ public interface CrudRepository<T, ID> extends Repository<T, ID> {
 	List<Postsale> findByUserNameLike(String afsSn);
 ```
 
-findByPostsaleNoLike
+**方法名称中支持的关键字**
+
+![image-20220512151340825](https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220512151340825.png)
+
+![image-20220512151403346](https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220512151403346.png)
+
+> **说明：**  In 和 NotIn 也将 Collection 的任何子类以及数组或可变参数作为参数。
+
+
 
 ##### 3) 关联关系
 
@@ -510,7 +518,7 @@ Pageable  Sort
 
 #### 3.2.4 JPQL查询
 
-```
+```java
     @Query("select P from Postsale p ")
     Stream<Postsale> findAllPostsales();
 
