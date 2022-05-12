@@ -2,5 +2,5 @@
 * [2. 主流ORM框架对比](doc/doc2)
 * [3. Spring Data JPA 使用](doc/doc3)
 * [4. 彩蛋](doc/doc4)
-* [5. 总结](doc/doc5)
+* [5. 不是总结的总结](doc/doc5)
 * [6. 参考文档](doc/doc6)

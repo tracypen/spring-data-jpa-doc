@@ -1,10 +1,10 @@
 ## 4. 彩蛋
 
-> spring-data-jpa原理
+> Spring Data JPA 原理
 
 ### 4.1 思考
 
-#### <img src="https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220511134553451.png" alt="image-20220511134553451" style="zoom:80%;" />
+<img src="https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220511134553451.png" alt="image-20220511134553451" style="zoom:80%;" />
 
 ### 4.2 源码分析
 
@@ -295,5 +295,3 @@ protected Collection<Class<?>> getIdentifyingTypes() {
 ### 4.3 总结
 
 ![image-20220511135637658](https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220511135637658.png)
-
-

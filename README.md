@@ -38,7 +38,7 @@ jpa 并不是一个框架，是一类框架的总称，持久层框架 Hibernate
 
 **总结：**提供通用接口，和模板类。屏蔽存储介质差异。
 
-### 1.2 特性
+### 1.3 特性
 
 - Sophisticated support to build repositories based on Spring and JPA
 - Support for [Querydsl](http://www.querydsl.com/) predicates and thus type-safe JPA queries
@@ -198,17 +198,20 @@ public interface JpaSpecificationExecutor<T> {
 
 - 工程名：`awesome-jpa`
 
-- 构建工具：`gradle`
+- 构建工具：`maven`
 
-- spring-boot版本：`2.5.11-SNAPSHOT`
+- spring-boot版本：`2.3.2-SNAPSHOT`
 - 数据库： `Mysql5.7`
 
-![image-20220511164207873](https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220511164207873.png)
+![image-20220512093931756](https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220512093931756.png)
 
 #### 3.1.2 引入依赖
 
-```groovy
-implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+```xml
+<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 ```
 
 #### 3.1.3 初始化数据库
@@ -244,13 +247,118 @@ spring:
     generate-ddl: true
 ```
 
+#### 3.1.5 创建实体
+
+**Customer**
+
+```java
+/**
+ * @author haopeng
+ * @date 2022-05-10 13:42
+ */
+@Table(name = "t_customer")
+@Entity
+@Data
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String userId;
+
+    private String userName;
+
+    private String mobile;
+
+    private String postCode;
+
+    private String channelId;
+
+    private String companyId;
+
+    @CreatedBy
+    @Column(name = "create_by")
+    private String  createBy;
+
+    @LastModifiedBy
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @CreatedDate
+    private LocalDateTime createDate;
+
+    @LastModifiedDate
+    private LocalDateTime updateDate;
+
+}
+```
+
+**Postsale**
+
+```java
+/**
+ * @author haopeng
+ * @date 2022-05-10 13:42
+ */
+@Table(name = "t_postsale")
+@Entity
+@Data
+public class Postsale {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "afs_sn", unique = true, nullable = false, length = 64)
+    private String afsSn;
+
+    @Column(name = "afsType", nullable = false, length = 64)
+    private Integer afsType;
+
+    @Column(name = "order_sn", length = 64)
+    private String orderSn;
+
+    @Column(name = "user_name", length = 128)
+    private String userName;
+
+
+    @Column(name = "user_id", length = 128)
+    private String userId;
+
+    @Column(name = "remark", length = 256)
+    private String remark;
+
+    @CreatedBy
+    @Column(name = "apply_time")
+    private String  applyTime;
+
+    @CreatedBy
+    @Column(name = "create_by")
+    private String  createBy;
+
+    @LastModifiedBy
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @CreatedDate
+    private LocalDateTime createDate;
+
+    @LastModifiedDate
+    private LocalDateTime updateDate;
+
+}
+```
+
+
+
 ### 3.2 基本用法
 
 #### 3.2.1 实体映射
 
 ##### 1) 常用JPA配置
 
-```
+```properties
 spring.jpa.hibernate.ddl-auto=none|create|create-drop|upadte|validate
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
@@ -294,49 +402,215 @@ datasource ...
 
 该注解标注的字段不会被应射到数据库当中。
 
+```java
+/**
+ * @author haopeng
+ * @date 2022-05-10 13:42
+ */
+@Table(name = "t_postsale")
+@Entity
+@Data
+public class Postsale {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "afs_sn", unique = true, nullable = false, length = 64)
+    private String afsSn;
+
+    @Column(name = "afsType", nullable = false, length = 64)
+    private Integer afsType;
+
+    @Column(name = "order_sn", length = 64)
+    private String orderSn;
+
+    @Column(name = "user_name", length = 128)
+    private String userName;
+
+
+    @Column(name = "user_id", length = 128)
+    private String userId;
+
+    @Column(name = "remark", length = 256)
+    private String remark;
+
+    @CreatedBy
+    @Column(name = "apply_time")
+    private String  applyTime;
+
+    @CreatedBy
+    @Column(name = "create_by")
+    private String  createBy;
+
+    @LastModifiedBy
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @CreatedDate
+    private LocalDateTime createDate;
+
+    @LastModifiedDate
+    private LocalDateTime updateDate;
+
+}
+
+```
+
+
+
 #### 3.2.2 通用增删查改
 
 ##### JpaRepository  
 
-##### crudRepository  
+```java
+@NoRepositoryBean
+public interface JpaRepository<T, ID> extends PagingAndSortingRepository<T, ID>, QueryByExampleExecutor<T> {
+    List<T> findAll();
+
+    List<T> findAll(Sort var1);
+
+    List<T> findAllById(Iterable<ID> var1);
+
+    <S extends T> List<S> saveAll(Iterable<S> var1);
+
+    void flush();
+
+    <S extends T> S saveAndFlush(S var1);
+
+    void deleteInBatch(Iterable<T> var1);
+
+    void deleteAllInBatch();
+
+    T getOne(ID var1);
+
+    <S extends T> List<S> findAll(Example<S> var1);
+
+    <S extends T> List<S> findAll(Example<S> var1, Sort var2);
+}
+```
 
 ##### PagingAndSortingRepository  
+
+```java
+@NoRepositoryBean
+public interface PagingAndSortingRepository<T, ID> extends CrudRepository<T, ID> {
+
+	/**
+	 * Returns all entities sorted by the given options.
+	 *
+	 * @param sort
+	 * @return all entities sorted by the given options
+	 */
+	Iterable<T> findAll(Sort sort);
+
+	/**
+	 * Returns a {@link Page} of entities meeting the paging restriction provided in the {@code Pageable} object.
+	 *
+	 * @param pageable
+	 * @return a page of entities
+	 */
+	Page<T> findAll(Pageable pageable);
+}
+```
+
+##### CrudRepository  
+
+```java
+@NoRepositoryBean
+public interface CrudRepository<T, ID> extends Repository<T, ID> {
+    <S extends T> S save(S var1);
+
+    <S extends T> Iterable<S> saveAll(Iterable<S> var1);
+
+    Optional<T> findById(ID var1);
+
+    boolean existsById(ID var1);
+
+    Iterable<T> findAll();
+
+    Iterable<T> findAllById(Iterable<ID> var1);
+
+    long count();
+
+    void deleteById(ID var1);
+
+    void delete(T var1);
+
+    void deleteAll(Iterable<? extends T> var1);
+
+    void deleteAll();
+}
+```
 
 #### 3.2.3 方法名查询
 
 ##### 1) 根据指定字段匹配
 
-findByPostsaleNo
+```java
+	Optional<Postsale> findByAfsSn(String afsSn);
+```
 
 ##### 2) 根据指定字段模糊匹配
+
+```java
+	List<Postsale> findByUserNameLike(String afsSn);
+```
 
 findByPostsaleNoLike
 
 ##### 3) 关联关系
 
-And Or 
+> And Or 
+
+```java
+	Streamable<Postsale> findAllByUserIdAndAfsType(String userId);
+```
 
 ##### 4) limit
 
-Top first
+> Top first
+
+```java
+	Streamable<Postsale> findTop5ByUserId(String userId);
+	Streamable<Postsale> findFirstByUserId(String userId);
+```
 
 ##### 5) 分页&排序
 
 Pageable  Sort 
 
+```java
+	List<Postsale> findPostsaleByUserIdOOrderByUpdateDateDesc(String userId, Pageable pageable);
+```
+
+
+
 #### 3.2.4 JPQL查询
 
 ```
-@Query("select u from User u")
-Stream<User> findAllByCustomQueryAndStream();
+    @Query("select P from Postsale p ")
+    Stream<Postsale> findAllPostsales();
 
-Stream<User> readAllByFirstnameNotNull();
-
-@Query("select u from User u")
-Stream<User> streamAllPaged(Pageable pageable);
+	@Query("select u from User u")
+	Stream<User> streamAllPaged(Pageable pageable);
 ```
 
 #### 3.2.5 原生SQL
+
+```java
+    @Query(value = "SELECT * FROM t_postsale WHERE afs_sn = ?1", nativeQuery = true)
+    Postsale getByAfsSn(String sfsSn);
+```
+
+> **注意：** 分页查询时需要指定count对应的查询sql
+
+```java
+    @Query(value = "SELECT * FROM t_postsale WHERE afs_sn = ?1",
+           countQuery = "SELECT count(1) FROM t_postsale WHERE afs_sn = ?1",
+           nativeQuery = true)
+    Page<User> findByLastname(String lastname, Pageable pageable);
+```
 
 
 
@@ -371,17 +645,17 @@ public interface QueryByExampleExecutor<T> {
 另外对于字符串还支持其他匹配（精准匹配之外）
 
 ```java
-User exampleUser = User.builder()
-        .name("B")
-        .username("Example_User")
-        .address(exampleAddress)
-        .build();
-    ExampleMatcher matcher = ExampleMatcher.matching()
-        .withMatcher("name", m -> m.startsWith())
-        .withMatcher("address.detail", m -> m.endsWith())
-        .withMatcher("username", m -> m.ignoreCase());
+public void exampleQueryTest() {
+        Postsale examplepOostsale = new Postsale();
+        examplepOostsale.setUserName("SINOSUN");
+        examplepOostsale.setAfsSn("300333");
 
-    Optional<User> userOptional = userRepository.findOne(Example.of(exampleUser, matcher));
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withMatcher("userName", m -> m.ignoreCase())
+                .withMatcher("afsSn", m -> m.startsWith());
+
+        Optional<Postsale> postsaleOptional = postsaleRepository.findOne(Example.of(examplepOostsale, matcher));
+}
 ```
 
 #### 3.2.7 Specification
@@ -395,8 +669,8 @@ public interface Specification<T> extends Serializable {
 
 	static <T> Specification<T> not(@Nullable Specification<T> spec) {
 
-		return spec == null //
-				? (root, query, builder) -> null //
+		return spec == null 
+				? (root, query, builder) -> null 
 				: (root, query, builder) -> builder.not(spec.toPredicate(root, query, builder));
 	}
 
@@ -435,6 +709,37 @@ root、query、criteriaBuild三个参数的类型都是在javax.persistence.crit
 
 Specification查询主要用于复杂查询。通过三个参数的组合，可以实现基本上绝大部分sql能实现的复杂查询，且基于Java代码，具有很好的可读性。
 
+**示例：**
+
+```java
+public List<Postsale> findSpecification(Date startTime, Date endTime, String afsSn, String userId) {
+
+        Pageable pageable = PageRequest.of(1, 10,Sort.by(Sort.Direction.ASC, "applyTime"));
+
+        Specification<Postsale> specification = (Specification<Postsale>) (root, query, cb) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            if (StrUtil.isNotBlank(userId)) {
+                predicateList.add(cb.equal(root.get("userId").as(String.class), userId));
+            }
+
+            if (StrUtil.isNotBlank(afsSn)) {
+                predicateList.add(cb.like(root.get("afsSn").as(String.class), "%" + userId + "%"));
+            }
+
+            predicateList.add(cb.greaterThanOrEqualTo(root.get("applyTime").as(Date.class), startTime));
+            predicateList.add(cb.lessThanOrEqualTo(root.get("applyTime").as(Date.class), endTime));
+
+            Predicate[] pre = new Predicate[predicateList.size()];
+            pre = predicateList.toArray(pre);
+            return query.where(pre).getRestriction();
+        };
+        Page<Postsale> page = postsaleRepository.findAll(specification, pageable);
+        return page.getContent();
+    }
+```
+
+
+
 ### 3.3 进阶用法
 
 #### 3.3.1 JPA 审计
@@ -443,14 +748,15 @@ Specification查询主要用于复杂查询。通过三个参数的组合，可�
 
 ##### 1）配置
 
-```
+```java
 @Configuration
 @EnableJpaAuditing
 public class JPAConfiguration {
+
     @Bean
-    public AuditorAware<User> getCurrentUser() {
-        User currentUser = User.builder().name("Bob").age(20).build();
-        return () -> Optional.of(currentUser);
+    public AuditorAware<String> getCurrentUser() {
+        User currentUser = User.builder().userId("300333").userName("SINOSUN").build();
+        return () -> Optional.of(currentUser).map(User::getUserId);
     }
 }
 
@@ -470,7 +776,7 @@ class SpringSecurityAuditorAware implements AuditorAware<User> {
 
 ##### 2）使用
 
-```
+```java
 @EntityListeners(AuditingEntityListener.class)
 ```
 
@@ -479,7 +785,7 @@ class SpringSecurityAuditorAware implements AuditorAware<User> {
 - `@CreatedDate`：创建时间
 - `@LastModifiedDate`：最后修改时间
 
-```
+```java
 @Builder
 @EqualsAndHashCode
 @Data
@@ -775,7 +1081,7 @@ ListenableFuture<User> findOneByLastname(String lastname);     (3)
 
 ### 4.1 思考
 
-#### <img src="https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220511134553451.png" alt="image-20220511134553451" style="zoom:80%;" />
+<img src="https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220511134553451.png" alt="image-20220511134553451" style="zoom:80%;" />
 
 ### 4.2 源码分析
 
@@ -1071,9 +1377,19 @@ protected Collection<Class<?>> getIdentifyingTypes() {
 
 ## 5. 总结
 
+#### 5.1 重新认识JPA
+
 - 强的很
 - 生态完善
 - 技术服务于业务
+
+#### 5.2 指导意义
+
+- 规范|标准化
+- 拓展性
+- spring
+- 设计思路
+- 设计模式运用
 
 ## 6. 参考文档
 

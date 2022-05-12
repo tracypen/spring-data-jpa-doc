@@ -1,4 +1,7 @@
 ## 1. Spring Data JPA介绍
+
+> 是什么
+
 ### 1.1 Spring Data
 
 Spring Data 的使命是为数据访问提供熟悉且一致的、基于 Spring 的编程模型，同时仍保留底层数据存储的特殊特征。
@@ -13,7 +16,7 @@ Spring Data 的使命是为数据访问提供熟悉且一致的、基于 Spring 
 
 ![image-20220509162437172](https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220509162437172.png)
 
-#### **JPA**
+#### **JPA** <!-- {docsify-ignore} -->
 
 JPA是JDK5.0新增的协议，通过持久层注解（@Entity）来描述对象和数据库的表映射关系。将Java项目运行期的实体对象，通过一种Session持久化到数据库中去。
 
@@ -23,7 +26,7 @@ JPA是JDK5.0新增的协议，通过持久层注解（@Entity）来描述对象�
 - 2)通用API：通过操作对象实体来操作CRUD，框架屏蔽了jdbc的复杂性
 - 3)JPQL 通过面向对象，而非面向数据库的查询语言来查询数据，避免程序与sql的耦合
 
-#### **Spring Data JPA**
+#### **Spring Data JPA** <!-- {docsify-ignore} -->
 
 为 Java Persistence API (JPA) 提供存储库支持。它简化了需要访问 JPA 数据源的应用程序的开发。
 
