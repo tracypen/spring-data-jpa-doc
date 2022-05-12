@@ -511,7 +511,7 @@ public interface CrudRepository<T, ID> extends Repository<T, ID> {
 Pageable  Sort 
 
 ```java
-	List<Postsale> findPostsaleByUserIdOOrderByUpdateDateDesc(String userId, Pageable pageable);
+	List<Postsale> findPostsaleByUserIdOrderByUpdateDateDesc(String userId, Pageable pageable);
 ```
 
 
