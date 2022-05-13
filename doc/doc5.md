@@ -1,5 +1,7 @@
 ## 5. 不是总结的总结
 
+- [博客地址](https://hawawa.gitee.io/categories/SpringDataJPA/)
+
 #### 5.1 重新认识JPA
 
 - 强的很

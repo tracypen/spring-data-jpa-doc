@@ -2,6 +2,8 @@
 
 > 怎么用
 
+- [博客地址](https://hawawa.gitee.io/categories/SpringDataJPA/)
+
 ### 3.0 前置知识
 
 #### EntityManager <!-- {docsify-ignore} -->

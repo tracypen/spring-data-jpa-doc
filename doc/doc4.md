@@ -2,6 +2,8 @@
 
 > Spring Data JPA 原理
 
+- [博客地址](https://hawawa.gitee.io/categories/SpringDataJPA/)
+
 ### 4.1 思考
 
 <img src="https://hp-blog-img.oss-cn-beijing.aliyuncs.com/markdown/image-20220511134553451.png" alt="image-20220511134553451" style="zoom:80%;" />

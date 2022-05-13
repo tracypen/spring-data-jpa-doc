@@ -2,6 +2,8 @@
 
 >  为什么
 
+- [博客地址](https://hawawa.gitee.io/categories/SpringDataJPA/)
+
 ### 2.1 主流的orm
 
 - ##### jdbc
